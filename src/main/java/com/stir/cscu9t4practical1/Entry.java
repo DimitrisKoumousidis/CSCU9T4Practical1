@@ -1,4 +1,5 @@
 // This class holds information about a single training session
+//GIT COMMIT TEST
 package com.stir.cscu9t4practical1;
 
 import java.util.Calendar;
