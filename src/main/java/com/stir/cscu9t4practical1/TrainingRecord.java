@@ -23,10 +23,12 @@ public class TrainingRecord {
    public String lookupEntry (int d, int m, int y) {
        ListIterator<Entry> iter = tr.listIterator();
        String result = "No entries found";
+       String matches = ""; //TASK 2 : Declare an empty string for any potential matches
        while (iter.hasNext()) {
           Entry current = iter.next();
-          if (current.getDay()==d && current.getMonth()==m && current.getYear()==y) 
-             result = current.getEntry();
+          if (current.getDay()==d && current.getMonth()==m && current.getYear()==y)
+             matches = matches.concat(current.getEntry() + "\n");  // TASK 2: Append using the concat method
+             result = matches;  //TASK 2: Assign the result to the matches string
             }
        return result;
    } // lookupEntry
