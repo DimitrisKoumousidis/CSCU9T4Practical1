@@ -16,8 +16,30 @@ public class TrainingRecord {
     
     // add a record to the list
    public void addEntry(Entry e){
-       tr.add(e);    
+       ListIterator<Entry> iter = tr.listIterator();  //TASK 4: Declare an iterator
+       int m = e.getMonth();
+       int d = e.getDay();
+       int y = e.getYear();
+       String name = e.getName();
+
+       boolean matchFound = false;   //TASK 4: Declare a boolean as false
+       while(iter.hasNext()){
+           Entry current = iter.next();
+           //TASK 4: If a match is found in the current records
+           if(current.getName().equals(name) && current.getDay() == d && current.getMonth() == m && current.getYear()==y){
+              matchFound = true; //TASK 4: Set matchfound to true
+           }
+       }
+
+       System.out.println(matchFound); //TASK 4: Print a message
+       if(matchFound == true){ //TASK 4: If matchFound = true
+           System.out.println("addEntry failed : Entry match in the records"); //TASK 4: Print a message
+
+       }else{
+           tr.add(e); //TASK 4: Else add the entry
+       }
    } // addClass
+
    
    // look up the entry of a given day and month
    public String lookupEntry (int d, int m, int y) {
