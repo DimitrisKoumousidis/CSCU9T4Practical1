@@ -8,7 +8,7 @@ import javax.swing.*;
 import java.lang.Number;
 
 public class TrainingRecordGUI extends JFrame implements ActionListener {
-
+    private String entryType = "null";
     private JTextField name = new JTextField(30);
     private JTextField day = new JTextField(2);
     private JTextField month = new JTextField(2);
@@ -17,6 +17,11 @@ public class TrainingRecordGUI extends JFrame implements ActionListener {
     private JTextField mins = new JTextField(2);
     private JTextField secs = new JTextField(2);
     private JTextField dist = new JTextField(4);
+    private JTextField terrain = new JTextField(10);
+    private JTextField tempo = new JTextField(10);
+    private JTextField repetitions = new JTextField(2);
+    private JTextField recovery = new JTextField(2);
+    private JTextField where = new JTextField(10);
     private JLabel labn = new JLabel(" Name:");
     private JLabel labd = new JLabel(" Day:");
     private JLabel labm = new JLabel(" Month:");
@@ -25,9 +30,18 @@ public class TrainingRecordGUI extends JFrame implements ActionListener {
     private JLabel labmm = new JLabel(" Mins:");
     private JLabel labs = new JLabel(" Secs:");
     private JLabel labdist = new JLabel(" Distance (km):");
+    private JLabel labterrain = new JLabel("Terrain type:");
+    private JLabel labtempo = new JLabel("Tempo:");
+    private JLabel labrep = new JLabel("Repetitions:");
+    private JLabel labrec = new JLabel("Recovery(Mins):");
+    private JLabel labwhere = new JLabel("Outdoors/Indoors:");// TASK 8 All necessary labels and buttons declared
+    private JButton cycleEntry = new JButton("Enter a cycle entry"); //Task 8:GUI button for adding cycle entries
+    private JButton swimEntry = new JButton("Enter a swim entry"); //Task 8:GUI button for adding swim entries
+    private JButton sprintEntry = new JButton("Enter a sprint entry"); //Task 8:GUI button for adding cycle entries
     private JButton addR = new JButton("Add");
     private JButton lookUpByDate = new JButton("Look Up");
     private JButton FindAllByDate = new JButton("Find all by date"); //TASK 1: Button implementation
+    private JButton FindByName = new JButton("Find by name"); //TASK 9 : Declare the FindByName button
     private TrainingRecord myAthletes = new TrainingRecord();
 
     private JTextArea outputArea = new JTextArea(5, 50);
@@ -42,37 +56,60 @@ public class TrainingRecordGUI extends JFrame implements ActionListener {
         setLayout(new FlowLayout());
         add(labn);
         add(name);
-        name.setEditable(true);
+        name.setEditable(false);
         add(labd);
         add(day);
-        day.setEditable(true);
+        day.setEditable(false);
         add(labm);
         add(month);
-        month.setEditable(true);
+        month.setEditable(false);
         add(laby);
         add(year);
-        year.setEditable(true);
+        year.setEditable(false);
         add(labh);
         add(hours);
-        hours.setEditable(true);
+        hours.setEditable(false);
         add(labmm);
         add(mins);
-        mins.setEditable(true);
+        mins.setEditable(false);
         add(labs);
         add(secs);
-        secs.setEditable(true);
+        secs.setEditable(false);
         add(labdist);
         add(dist);
-        dist.setEditable(true);
+        dist.setEditable(false);
+        add(labterrain);
+        add(terrain);
+        terrain.setEditable(false); //TASK 8: Add the terrain button to the GUI
+        add(labtempo);
+        add(tempo);
+        tempo.setEditable(false); //TASK 8: Add the tempo button to the GUI
+        add(labrep);
+        add(repetitions);
+        repetitions.setEditable(false); //TASK 8: Add the repetitions button to the GUI
+        add(labrec);
+        add(recovery);
+        recovery.setEditable(false); //TASK 8: Add the recovery button to the GUI
+        add(labwhere);
+        add(where);
+        where.setEditable(false); //TASK 8: Add the where button to the GUI
         add(addR);
         addR.addActionListener(this);
         add(lookUpByDate);
         lookUpByDate.addActionListener(this);
         add(outputArea);
         outputArea.setEditable(false);
-        add(FindAllByDate); //TASK 1: Add the button to the GUI
+        add(FindAllByDate); //TASK 1: Add the FindAllByDate button to the GUI
         FindAllByDate.addActionListener(this);
-        setSize(720, 200);
+        add(cycleEntry);
+        cycleEntry.addActionListener(this);
+        add(swimEntry);
+        swimEntry.addActionListener(this);
+        add(sprintEntry);
+        sprintEntry.addActionListener(this);
+        add(FindByName);
+        FindByName.addActionListener(this); //TASK 9 : Add the FindByName button to the GUI
+        setSize(720, 500); //Set the GUI'S height to 500
         setVisible(true);
         blankDisplay();
 
@@ -92,6 +129,96 @@ public class TrainingRecordGUI extends JFrame implements ActionListener {
         }
         if(event.getSource() == FindAllByDate) { //TASK 1: FindAllByDate Button action
             message = FindAllByDate();
+        }
+        if(event.getSource() == cycleEntry){ //TASK 8: If the Cycle entry button is pressed
+            name.setEditable(true);//TASK 8: Reset the textfields and enable the appropriate input objects
+            name.setText("");
+            day.setEditable(true);
+            day.setText("");
+            month.setEditable(true);
+            month.setText("");
+            mins.setEditable(true);
+            mins.setText("");
+            hours.setEditable(true);
+            hours.setText("");
+            secs.setEditable(true);
+            secs.setText("");
+            year.setEditable(true);
+            year.setText("");
+            dist.setEditable(true);
+            dist.setText("");
+            terrain.setEditable(true);
+            terrain.setText("");
+            tempo.setEditable(true);
+            tempo.setText("");
+            repetitions.setEditable(false);
+            repetitions.setText("");
+            recovery.setEditable(false);
+            recovery.setText("");
+            where.setEditable(false);
+            where.setText("");
+            entryType = "cycle"; //Set the entryType string to cycle
+        }
+        if(event.getSource() == swimEntry){ //TASK 8: If the swim entry button is pressed
+            name.setEditable(true);//TASK 8: Reset the textfields and enable the appropriate input objects
+            name.setText("");
+            day.setEditable(true);
+            day.setText("");
+            month.setEditable(true);
+            month.setText("");
+            mins.setEditable(true);
+            mins.setText("");
+            hours.setEditable(true);
+            hours.setText("");
+            secs.setEditable(true);
+            secs.setText("");
+            year.setEditable(true);
+            year.setText("");
+            dist.setEditable(true);
+            dist.setText("");
+            terrain.setEditable(false);
+            terrain.setText("");
+            tempo.setEditable(false);
+            tempo.setText("");
+            repetitions.setEditable(false);
+            repetitions.setText("");
+            recovery.setEditable(false);
+            recovery.setText("");
+            where.setEditable(true);
+            where.setText("");
+            entryType = "swim"; //Set the entryType string to swim
+        }
+        if(event.getSource() == sprintEntry){ //TASK 8: If the sprint entry button is pressed
+            name.setEditable(true);//TASK 8: Reset the textfields and enable the appropriate input objects
+            name.setText("");
+            day.setEditable(true);
+            day.setText("");
+            month.setEditable(true);
+            month.setText("");
+            mins.setEditable(true);
+            mins.setText("");
+            hours.setEditable(true);
+            hours.setText("");
+            secs.setEditable(true);
+            secs.setText("");
+            year.setEditable(true);
+            year.setText("");
+            dist.setEditable(true);
+            dist.setText("");
+            terrain.setEditable(false);
+            terrain.setText("");
+            tempo.setEditable(false);
+            tempo.setText("");
+            repetitions.setEditable(true);
+            repetitions.setText("");
+            recovery.setEditable(true);
+            recovery.setText("");
+            where.setEditable(false);
+            where.setText("");
+            entryType = "sprint"; //Set the entryType string to sprint
+        }
+        if(event.getSource() == FindByName){
+            message = FindByName();
         }
         outputArea.setText(message);
         blankDisplay();
@@ -115,9 +242,30 @@ public class TrainingRecordGUI extends JFrame implements ActionListener {
             int h = Integer.parseInt(hours.getText());
             int mm = Integer.parseInt(mins.getText());
             int s = Integer.parseInt(secs.getText());
+            if (entryType.equals("cycle")){ //TASK 8: If the entry is a cycle
+                String ter = terrain.getText();
+                String temp = tempo.getText();
 
-            Entry e = new Entry(n, d, m, y, h, mm, s, km);
-            myAthletes.addEntry(e);
+                Entry e = new CycleEntry(n, d, m, y, h, mm, s, km,ter,temp); //TASK 8: Create and add a CycleEntry object
+                myAthletes.addEntry(e);
+
+            }
+            if(entryType.equals("swim")){//TASK 8: If the entry is a swim
+
+                String whe = where.getText();
+//                if(!whe.toLowerCase().equals("outdoors") || !whe.toLowerCase().equals("pool") ){ //If the input is invalid
+//                    return "Invalid input for \"where\"";
+//                }
+                Entry e = new SwimEntry(n, d, m, y, h, mm, s, km,whe); //TASK 8: Create and add a SwimEntry object
+                myAthletes.addEntry(e);
+            }
+            if(entryType.equals("sprint")){ //TASK 8: If the entry is a sprint
+                int rep = Integer.parseInt(repetitions.getText());
+                int rec = Integer.parseInt(recovery.getText());
+                Entry e = new SprintEntry(n, d, m, y, h, mm, s, km,rep,rec); //TASK 8: Create and add a SprintEntry object
+                myAthletes.addEntry(e);
+            }
+
             return message;
         } catch(NumberFormatException e) {  //TASK 4: Catch a number format exception
 
@@ -144,7 +292,7 @@ public class TrainingRecordGUI extends JFrame implements ActionListener {
         return message;
     }
 
-    public String FindAllByDate(){   //TASK 1: Button method
+    public String FindAllByDate(){  //TASK 1: FindAllByDate button method
         String message;
         try { //TASK 4: Check if month,day,year are integers
             int m = Integer.parseInt(month.getText());
@@ -156,6 +304,12 @@ public class TrainingRecordGUI extends JFrame implements ActionListener {
             message = "Invalid date input"; //TASK 4: Display a message if the input is invalid
             System.out.println("FindAllByDate failed : Invalid input");
         }
+        return message;
+    }
+    public String FindByName() { //TASK 9: FindByName button method
+        String message;
+        String target = name.getText();
+        message = myAthletes.FindByName(target);
         return message;
     }
 

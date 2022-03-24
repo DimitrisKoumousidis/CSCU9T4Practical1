@@ -24,7 +24,7 @@ public class TrainingRecord {
 
        boolean matchFound = false;   //TASK 4: Declare a boolean as false
        while(iter.hasNext()){
-           Entry current = iter.next();
+            Entry current = iter.next();
            //TASK 4: If a match is found in the current records
            if(current.getName().equals(name) && current.getDay() == d && current.getMonth() == m && current.getYear()==y){
               matchFound = true; //TASK 4: Set matchfound to true
@@ -54,7 +54,22 @@ public class TrainingRecord {
             }
        return result;
    } // lookupEntry
-   
+
+
+    public String FindByName(String name) { //TASK 9 : Look for the entries that match the name
+        ListIterator<Entry> iter = tr.listIterator();
+        String result = "No matches found";
+        String matches = "";
+        while (iter.hasNext()) {
+            Entry current = iter.next();
+            if (current.getName().toLowerCase().equals(name))
+                matches = matches.concat(current.getEntry() + "\n");  // TASK 9: Append using the concat method
+                result = matches;  //TASK 9: Assign the result to the matches string
+            }
+            return result;
+        }
+
+
    // Count the number of entries
    public int getNumberOfEntries(){
        return tr.size();
