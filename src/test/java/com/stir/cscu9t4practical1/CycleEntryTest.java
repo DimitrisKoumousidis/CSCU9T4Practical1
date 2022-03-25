@@ -152,6 +152,17 @@ public class CycleEntryTest {
         String result = ((CycleEntry) instance).getTempo(); //TASK 6: Casted to CycleEntry
         assertEquals(expResult, result);
     }
+    /**
+     * Test of getType, of class CycleEntry.
+     */
+    @Test
+    public void testGetType() {
+        System.out.println("getType");
+        Entry instance = new CycleEntry("Alice", 1, 2, 2003, 0, 16, 7, 3, "asphalt", "moderate");
+        String expResult = "cycle";
+        String result = ((CycleEntry) instance).getType(); //TASK 12: Casted to CycleEntry
+        assertEquals(expResult, result);
+    }
 
     /**
      * Test of getEntry method, of class CycleEntry.

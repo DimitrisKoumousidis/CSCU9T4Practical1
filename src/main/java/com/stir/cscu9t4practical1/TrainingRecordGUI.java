@@ -40,12 +40,12 @@ public class TrainingRecordGUI extends JFrame implements ActionListener {
     private JButton sprintEntry = new JButton("Enter a sprint entry"); //Task 8:GUI button for adding cycle entries
     private JButton addR = new JButton("Add");
     private JButton lookUpByDate = new JButton("Look Up");
-    private JButton FindAllByDate = new JButton("Find all by date"); //TASK 1: Button implementation
+    private JButton FindAllByDate = new JButton("Find all by date"); //TASK 1: Declare the FindAllByDate button
     private JButton FindByName = new JButton("Find by name"); //TASK 9 : Declare the FindByName button
+    private JButton RemoveEntry = new JButton("Remove"); //TASK 11: Declare the remove button
+    private JButton WeeklyDistance = new JButton("Weekly distance"); //TASK 14: Declare the weekly distance button
     private TrainingRecord myAthletes = new TrainingRecord();
-
     private JTextArea outputArea = new JTextArea(5, 50);
-
     public static void main(String[] args) {
         TrainingRecordGUI applic = new TrainingRecordGUI();
     } // main
@@ -56,7 +56,7 @@ public class TrainingRecordGUI extends JFrame implements ActionListener {
         setLayout(new FlowLayout());
         add(labn);
         add(name);
-        name.setEditable(false);
+        name.setEditable(true);
         add(labd);
         add(day);
         day.setEditable(false);
@@ -109,6 +109,10 @@ public class TrainingRecordGUI extends JFrame implements ActionListener {
         sprintEntry.addActionListener(this);
         add(FindByName);
         FindByName.addActionListener(this); //TASK 9 : Add the FindByName button to the GUI
+        add(RemoveEntry);
+        RemoveEntry.addActionListener(this); //TASK 11: Add the Remove button
+        add(WeeklyDistance);
+        WeeklyDistance.addActionListener(this); //TASK 14: Add the weekly distance button
         setSize(720, 500); //Set the GUI'S height to 500
         setVisible(true);
         blankDisplay();
@@ -158,6 +162,8 @@ public class TrainingRecordGUI extends JFrame implements ActionListener {
             where.setEditable(false);
             where.setText("");
             entryType = "cycle"; //Set the entryType string to cycle
+
+
         }
         if(event.getSource() == swimEntry){ //TASK 8: If the swim entry button is pressed
             name.setEditable(true);//TASK 8: Reset the textfields and enable the appropriate input objects
@@ -217,13 +223,25 @@ public class TrainingRecordGUI extends JFrame implements ActionListener {
             where.setText("");
             entryType = "sprint"; //Set the entryType string to sprint
         }
-        if(event.getSource() == FindByName){
+        if(event.getSource() == FindByName){ //TASK 9: If the "Find by name" button is pressed
             message = FindByName();
+        }
+        if(event.getSource() == RemoveEntry){ //TASK 11: If the "Remove" button is pressed
+            message = Remove();
+        }
+        if(event.getSource() == WeeklyDistance){ //TASK 14: If the "Weekly Distance" button is pressed
+            message = WeekDist();
         }
         outputArea.setText(message);
         blankDisplay();
     } // actionPerformed
 
+    /**
+     * Adds an entry to the list once the "Look up" button is pressed
+     * its able to addd all 3 types of entries depending on the entry selection
+     * calls the addEntry() method from TrainingRecord.java
+     * @return the output message for the outputArea textField
+     */
     public String addEntry(String what) {
         String message = "Record added\n";
 
@@ -264,7 +282,12 @@ public class TrainingRecordGUI extends JFrame implements ActionListener {
                 int rec = Integer.parseInt(recovery.getText());
                 Entry e = new SprintEntry(n, d, m, y, h, mm, s, km,rep,rec); //TASK 8: Create and add a SprintEntry object
                 myAthletes.addEntry(e);
-            }
+
+
+                }
+
+
+
 
             return message;
         } catch(NumberFormatException e) {  //TASK 4: Catch a number format exception
@@ -274,7 +297,13 @@ public class TrainingRecordGUI extends JFrame implements ActionListener {
         }
         return message;
     }
-    
+    /**
+     * TASK 4
+     * Looks up for any entries that match the date parsed
+     * from the day,month and year buttons
+     * calls lookupEntry from TrainingRecord.java
+     * @return the output message for the outputArea textField
+     */
     public String lookupEntry() {
         String message;
         try { //TASK 4: Check if month,day,year are integers
@@ -291,7 +320,11 @@ public class TrainingRecordGUI extends JFrame implements ActionListener {
         }
         return message;
     }
-
+    /**
+     * TASK 4
+     * A duplicate of lookupEntry from TrainingRecordGUI.java
+     * @return the output message for the outputArea textField
+     */
     public String FindAllByDate(){  //TASK 1: FindAllByDate button method
         String message;
         try { //TASK 4: Check if month,day,year are integers
@@ -306,11 +339,68 @@ public class TrainingRecordGUI extends JFrame implements ActionListener {
         }
         return message;
     }
-    public String FindByName() { //TASK 9: FindByName button method
+    /**
+     * TASK 9
+     * Finds all the record that match the name present in the name textfield
+     * once the "Find by name" button is pressed
+     * @return the output message for the outputArea textField
+     */
+    public String FindByName() {
         String message;
         String target = name.getText();
         message = myAthletes.FindByName(target);
         return message;
+    }
+
+    /**
+     * TASK 11
+     * Removes the entry specified by the name and date in the
+     * name text field and day, month and year buttons
+     * once the "Remove" button is pressed
+     * @return the output message for the outputArea textField
+     */
+    public String Remove(){
+        String message;
+        try {
+            int m = Integer.parseInt(month.getText());
+            int d = Integer.parseInt(day.getText());
+            int y = Integer.parseInt(year.getText());
+            String n = name.getText();
+
+            message = myAthletes.Remove(n,d,m,y);;
+
+        } catch(NumberFormatException e){
+            message = "Invalid date input"; //TASK 11: Display a message if the input is invalid
+            System.out.println("Remove failed : Invalid input");
+
+        }
+        return message;
+    }
+    /**
+     * TASK 14
+     * Shows the total distance for all of the records in the past 7 days
+     * for every entry type depending on the name text field and day, month and year buttons
+     * once the "Weekly distance" button is pressed
+     * @return the output message for the outputArea textField
+     */
+    public String WeekDist(){
+         String message;
+        try {
+            int m = Integer.parseInt(month.getText());
+            int d = Integer.parseInt(day.getText());
+            int y = Integer.parseInt(year.getText());
+            String n = name.getText();
+
+            message = myAthletes.weeklyDistance(n,d,m,y);;
+
+        } catch(NumberFormatException e){
+            message = "Invalid date input"; //TASK 11: Display a message if the input is invalid
+            System.out.println("Remove failed : Invalid input");
+
+        }
+        return message;
+
+
     }
 
     public void blankDisplay() {

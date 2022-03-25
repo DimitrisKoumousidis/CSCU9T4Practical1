@@ -14,6 +14,7 @@ public class SprintEntry extends Entry{
         this.repetitions = rep;
         this.recovery = rec;
         this.distance = (this.distance / 100F);
+        this.entryType = "sprint";
     }
     /**
      * Returns the repetitions from this object
@@ -27,6 +28,13 @@ public class SprintEntry extends Entry{
     public int getRecovery() {
         return recovery;
     }
+    /**
+     * Returns the entry type
+     */
+    public String getType() {
+        return entryType;
+    }
+
     /**
      * Overridden method from the Entry class
      * returns a string with the required information from the SprintEntry class

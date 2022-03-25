@@ -14,6 +14,7 @@ public class CycleEntry extends Entry{
         super(n, d, m, y, h, min, s, dist);
         this.terrain = terrain;
         this.tempo = tempo;
+        this.entryType = "cycle";
     }
     /**
      * Returns the terrain string of this object
@@ -26,6 +27,12 @@ public class CycleEntry extends Entry{
      */
     public String getTempo() {
         return tempo;
+    }
+    /**
+     * Returns the entry type
+     */
+    public String getType() {
+        return entryType;
     }
     /**
      * Overridden method from the Entry class

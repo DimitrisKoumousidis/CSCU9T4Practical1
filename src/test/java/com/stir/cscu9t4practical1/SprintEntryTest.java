@@ -155,7 +155,17 @@ public class SprintEntryTest {
         int result = ((SprintEntry) instance).getRecovery();
         assertEquals(expResult, result);
     }
-
+    /**
+     * Test of getType, of class SprintEntry.
+     */
+    @Test
+    public void testGetType() {
+        System.out.println("getType");
+        Entry instance = new SprintEntry("Alice", 1, 2, 2003, 0, 16, 7, 300, 4, 2);
+        String expResult = "sprint";
+        String result = ((SprintEntry) instance).getType(); //TASK 12: Casted to SprintEntry
+        assertEquals(expResult, result);
+    }
     /**
      * Test of getEntry method, of class SprintEntry.
      */

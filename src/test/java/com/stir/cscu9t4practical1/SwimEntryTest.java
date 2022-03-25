@@ -149,6 +149,17 @@ public class SwimEntryTest {
         assertEquals(expResultB, result2);
     }
     /**
+     * Test of getType, of class SwimEntry.
+     */
+    @Test
+    public void testGetType() {
+        System.out.println("getType");
+        Entry instance = new SwimEntry("Alice", 1, 2, 2003, 0, 16, 7, 3,"outdoors");
+        String expResult = "swim";
+        String result = ((SwimEntry) instance).getType(); //TASK 12: Casted to SwimEntry
+        assertEquals(expResult, result);
+    }
+    /**
      * Test of getEntry method, of class SwimEntry.
      */
     @Test

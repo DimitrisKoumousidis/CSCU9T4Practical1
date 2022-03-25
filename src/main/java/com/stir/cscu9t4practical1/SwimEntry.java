@@ -10,6 +10,7 @@ public class SwimEntry extends Entry{
     public SwimEntry(String n, int d, int m, int y, int h, int min, int s, float dist, String where) {
         super(n, d, m, y, h, min, s, dist);
         this.where = where;
+        this.entryType = "swim";
     }
     /**
      * Returns a string depending on the "where" string
@@ -23,6 +24,12 @@ public class SwimEntry extends Entry{
             output = "outdoors";
         }
         return output;
+    }
+    /**
+     * Returns the entry type
+     */
+    public String getType() {
+        return entryType;
     }
     /**
      * Overridden method from the Entry class

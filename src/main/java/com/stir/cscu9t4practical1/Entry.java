@@ -7,6 +7,7 @@ public class Entry {
   protected String name;
   protected Calendar dateAndTime;
   protected float distance;
+  protected String entryType;
   
   public Entry (String n, int d, int m, int y, int h, int min, int s, float dist) {
     name = n;
@@ -47,7 +48,7 @@ public class Entry {
 
   public float getDistance () {
     return distance;
-  } //getYear
+  } //getDistance
 
   public String getEntry () {
    String result = getName()+" ran " + getDistance() + " km in "
