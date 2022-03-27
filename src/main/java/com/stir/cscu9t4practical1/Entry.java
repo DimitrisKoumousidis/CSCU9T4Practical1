@@ -50,6 +50,13 @@ public class Entry {
     return distance;
   } //getDistance
 
+  /**
+   * Returns the entry type
+   */
+  public String getType() {
+    return entryType;
+  }
+
   public String getEntry () {
    String result = getName()+" ran " + getDistance() + " km in "
              +getHour()+":"+getMin()+":"+ getSec() + " on "

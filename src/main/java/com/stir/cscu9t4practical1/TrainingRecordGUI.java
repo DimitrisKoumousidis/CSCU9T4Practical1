@@ -227,7 +227,7 @@ public class TrainingRecordGUI extends JFrame implements ActionListener {
             message = FindByName();
         }
         if(event.getSource() == RemoveEntry){ //TASK 11: If the "Remove" button is pressed
-            message = Remove();
+            message = RemoveEntry();
         }
         if(event.getSource() == WeeklyDistance){ //TASK 14: If the "Weekly Distance" button is pressed
             message = WeekDist();
@@ -271,13 +271,11 @@ public class TrainingRecordGUI extends JFrame implements ActionListener {
             if(entryType.equals("swim")){//TASK 8: If the entry is a swim
 
                 String whe = where.getText();
-//                if(!whe.toLowerCase().equals("outdoors") || !whe.toLowerCase().equals("pool") ){ //If the input is invalid
-//                    return "Invalid input for \"where\"";
-//                }
                 Entry e = new SwimEntry(n, d, m, y, h, mm, s, km,whe); //TASK 8: Create and add a SwimEntry object
                 myAthletes.addEntry(e);
             }
             if(entryType.equals("sprint")){ //TASK 8: If the entry is a sprint
+
                 int rep = Integer.parseInt(repetitions.getText());
                 int rec = Integer.parseInt(recovery.getText());
                 Entry e = new SprintEntry(n, d, m, y, h, mm, s, km,rep,rec); //TASK 8: Create and add a SprintEntry object
@@ -359,7 +357,7 @@ public class TrainingRecordGUI extends JFrame implements ActionListener {
      * once the "Remove" button is pressed
      * @return the output message for the outputArea textField
      */
-    public String Remove(){
+    public String RemoveEntry(){
         String message;
         try {
             int m = Integer.parseInt(month.getText());
@@ -414,8 +412,14 @@ public class TrainingRecordGUI extends JFrame implements ActionListener {
         dist.setText("");
 
     }// blankDisplay
-    // Fills the input fields on the display for testing purposes only
-    public void fillDisplay(Entry ent) {
+    /**
+     * TASK 12
+     * Fills up the display with information to build a swimEntry Object
+     * Only used for testing purposes
+     * @param ent the entry to be made
+     * @param location the location where the swim took place outdoors/pool
+     */
+    public void fillDisplaySwimEntry(Entry ent,String location) {
         name.setText(ent.getName());
         day.setText(String.valueOf(ent.getDay()));
         month.setText(String.valueOf(ent.getMonth()));
@@ -424,6 +428,51 @@ public class TrainingRecordGUI extends JFrame implements ActionListener {
         mins.setText(String.valueOf(ent.getMin()));
         secs.setText(String.valueOf(ent.getSec()));
         dist.setText(String.valueOf(ent.getDistance()));
+        entryType = "swim";
+        where.setText(location);
+    }
+    /**
+     * TASK 12
+     * Fills up the display with information to build a sprintEntry Object
+     * Only used for testing purposes
+     * @param ent the entry to be made
+     * @param rep the repetitions integer
+     * @param rec the recoveries integer
+     */
+    public void fillDisplaySprintEntry(Entry ent,int rep, int rec) {
+        name.setText(ent.getName());
+        day.setText(String.valueOf(ent.getDay()));
+        month.setText(String.valueOf(ent.getMonth()));
+        year.setText(String.valueOf(ent.getYear()));
+        hours.setText(String.valueOf(ent.getHour()));
+        mins.setText(String.valueOf(ent.getMin()));
+        secs.setText(String.valueOf(ent.getSec()));
+        dist.setText(String.valueOf(ent.getDistance()));
+        entryType = "sprint";
+        recovery.setText(String.valueOf(rec));
+        repetitions.setText(String.valueOf(rep));
+
+    }
+    /**
+     * TASK 12
+     * Fills up the display with information to build a cycleEntry Object
+     * Only used for testing purposes
+     * @param ent the entry to be made
+     * @param terr the terrain string
+     * @param te the tempo string
+     */
+    public void fillDisplayCycleEntry(Entry ent, String terr, String te) {
+        name.setText(ent.getName());
+        day.setText(String.valueOf(ent.getDay()));
+        month.setText(String.valueOf(ent.getMonth()));
+        year.setText(String.valueOf(ent.getYear()));
+        hours.setText(String.valueOf(ent.getHour()));
+        mins.setText(String.valueOf(ent.getMin()));
+        secs.setText(String.valueOf(ent.getSec()));
+        dist.setText(String.valueOf(ent.getDistance()));
+        entryType = "cycle";
+        terrain.setText(terr);
+        tempo.setText(te);
     }
 
 } // TrainingRecordGUI

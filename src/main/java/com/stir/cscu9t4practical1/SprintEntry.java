@@ -41,7 +41,7 @@ public class SprintEntry extends Entry{
      * sets the distance to itself multiplied by 100
      */
     public String getEntry(){
-        String result = getName()+" sprinted " + getRepetitions() +"x"+ (int)getDistance()*100 + "m in "
+        String result = getName()+" sprinted " + getRepetitions() +"x"+ getDistance()*100 + "kms in "
                 +getHour()+":"+getMin()+":"+ getSec() + " " + "with"+ " "
                 +getRecovery()+ " " + "minutes recovery" +" on "
                 +getDay()+"/"+getMonth()+"/"+getYear()+"\n";

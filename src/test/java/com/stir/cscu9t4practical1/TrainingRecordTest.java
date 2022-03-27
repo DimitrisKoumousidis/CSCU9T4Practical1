@@ -21,21 +21,21 @@ public class TrainingRecordTest {
     public TrainingRecordTest() {
     }
     
-    @BeforeAll
-    public void setUpClass() {
-    }
-    
-    @AfterAll
-    public void tearDownClass() {
-    }
-    
-    @BeforeEach
-    public void setUp() {
-    }
-    
-    @AfterEach
-    public void tearDown() {
-    }
+//    @BeforeAll
+//    public void setUpClass() {
+//    }
+//
+//    @AfterAll
+//    public void tearDownClass() {
+//    }
+//
+//    @BeforeEach
+//    public void setUp() {
+//    }
+//
+//    @AfterEach
+//    public void tearDown() {
+//    }
 
     /**
      * Test of addEntry method, of class TrainingRecord.
@@ -124,23 +124,58 @@ public class TrainingRecordTest {
     @Test
     public void testLookupEntries() {
         System.out.println("lookupEntries");
-        String expectResultsNone = "Sorry couldn't find anything for this date";
-        String expectResults = "Alice ran 3.0 km in 0:16:7 on 1/2/2003\n" + 
-                                "Bob ran 3.0 km in 0:14:15 on 1/2/2003\n";
+        String expectResultsNone = "No entries found";
+        String expectResults ="Alice sprinted 2x3.0kms in 0:16:7 with 1 minutes recovery on 1/2/2003\n" + "\n" +
+                 "Bob sprinted 3x3.0kms in 0:14:15 with 3 minutes recovery on 1/2/2003\n"+"\n";
         TrainingRecord instance = new TrainingRecord();
-        Entry a = new Entry("Alice", 1, 2, 2003, 0, 16, 7, 3);
-        Entry b = new Entry("Bob", 1, 2, 2003, 0, 14, 15, 3);
+        Entry a = new SprintEntry("Alice", 1, 2, 2003, 0, 16, 7, 3,2,1);
+        Entry b = new SprintEntry("Bob", 1, 2, 2003, 0, 14, 15, 3,3,3);
         instance.addEntry(a);
         instance.addEntry(b);
-        fail("This method cannot be tested as it does not exist yet");
+        //fail("This method cannot be tested as it does not exist yet");
         int d = 1;
         int m = 2;
         int y = 2003;
         // un-comment the lines below when you've implemented the method
-//        String resultSuccess = instance.lookupEntries(d,m,y);
-//        String resultNone = instance.lookupEntries(d,m,1999);
-//        assertEquals(expectResultsNone,resultNone);
-//        assertEquals(expectResults,resultSuccess);
+        String resultSuccess = instance.lookupEntry(d,m,y);
+        String resultNone = instance.lookupEntry(d,m,1999);
+        assertEquals(expectResultsNone,resultNone);
+        assertEquals(expectResults,resultSuccess);
+    }
+    /**
+     * Test to see if all display requirements have been met
+     */
+    @Test
+    public void testWeeklyDistance(){
+        System.out.println("weeklyDistance");
+        TrainingRecord instance = new TrainingRecord();
+        //The start date for this test is (25/3/2022)
+        Entry a1 = new SprintEntry("Thing", 25, 3, 2022, 0, 16, 7, 10,1,1);
+        Entry a2 = new SprintEntry("Thing", 22, 3, 2022, 0, 16, 7, 5,2,1);
+        //Testing 1 case which takes place today (25/3/2022)
+        // Sprint weekly distance should be : 10*1 + 5*2 = 20kms
+        Entry a3 = new SwimEntry("Thing", 21, 3, 2022, 0, 16, 7, 20,"outdoors");
+        Entry a4 = new SwimEntry("Thing", 19, 3, 2022, 0, 16, 7, 20,"pool");
+        //Testing for both entries indoors and outdoors
+        // Swim weekly distance should be : 20 + 20 = 40kms
+        Entry a5 = new CycleEntry("Thing", 18, 3, 2022, 0, 16, 7, 2, "asphalt", "moderate");
+        Entry a6 = new CycleEntry("Thing", 20, 3, 2022, 0, 16, 7, 2, "asphalt", "moderate");
+        //Testing for 1 edge case at the very end of the search range
+        //Cycle weekly distance should be 4 kms
+        instance.addEntry(a1);
+        instance.addEntry(a2);
+        instance.addEntry(a3);
+        instance.addEntry(a4);
+        instance.addEntry(a5);
+        instance.addEntry(a6);//Add all the entries
+        String expectedResults = "Date added : 25/3/2022 \n" +
+                "Swimming distance last week = 40.0kms \n" +
+                "Sprinting distance last week = 20.0kms \n" +
+                "Cycling distance last week = 4.0kms \n" +
+                "Searched until : 18/3/2022";
+
+        String weeklyResults = instance.weeklyDistance("thing",25,3,2022);
+        assertEquals(expectedResults,weeklyResults);
     }
     
 }

@@ -37,7 +37,7 @@ public class TrainingRecord {
            }
        }
 
-       System.out.println(matchFound); //TASK 4: Print a message
+
        if(matchFound == true){ //TASK 4: If matchFound = true
            System.out.println("addEntry failed : Entry match in the records"); //TASK 4: Print a message
        }else{
@@ -119,7 +119,17 @@ public class TrainingRecord {
             }
         return message;
        }
-
+    /**
+     * TASK 14
+     * Searches all the entries in the past week for a given name
+     * and from which date it should go back a week
+     * @returns all of the matching results
+     * @param name the string of the name of the entry
+     * @param d the day of the entry's date
+     * @param m the month of the entry's date
+     * @param y the year in the entry's date
+     *
+     */
        public String weeklyDistance(String name, int d ,int m, int y){
            ListIterator<Entry> iter = tr.listIterator();
            String message = "";
@@ -135,7 +145,7 @@ public class TrainingRecord {
                while(iter.hasNext() == true) {
                    Entry current = iter.next();
 
-                   for(int i = 0; i <= 6 ;i++) {
+                   for(int i = 0; i <= 7 ;i++) {
 
 
                        //If the name and the date is equal
@@ -149,7 +159,7 @@ public class TrainingRecord {
                                cyc += current.getDistance(); //Add the distance to the cycle distance summary
                            }
                            if (current.entryType.equals("sprint")) { //If the entry is a sprint
-                               snt += current.getDistance(); //Add the distance to the sprint distance summary
+                               snt += ((SprintEntry)current).getRepetitions()* (current.getDistance()*100); //Add the distance with the repetitions
                            }
                        }
                        calendar.add(calendar.HOUR_OF_DAY, -24); // Go back 24 hours
@@ -158,12 +168,13 @@ public class TrainingRecord {
                    calendar.set(y,m-1,d);  //Reset the date
                }
 
-
+           calendar.set(y,m-1,d-7);  //Set the date 1 week before(Output purposes)
            message="Date added :" + " " + d + "/" + m + "/" + y + " " + "\n"
                    +"Swimming distance last week =" + " " + swi +"kms"+ " " + "\n"
                    +"Sprinting distance last week =" + " " + snt +"kms"+ " " + "\n"
                    +"Cycling distance last week =" + " " + cyc +"kms"+ " " + "\n"
-                   +"Searched until :" + " " + calendar.getTime();
+                   +"Searched until :" + " " + calendar.get(Calendar.DAY_OF_MONTH)+"/"+(calendar.get(Calendar.MONTH)+1) + "/"
+                                             + calendar.get(Calendar.YEAR);
            return message;
        }
 

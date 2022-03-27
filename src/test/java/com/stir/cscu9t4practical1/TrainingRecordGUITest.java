@@ -88,11 +88,47 @@ public class TrainingRecordGUITest {
     public void testAddEntry(){
         System.out.println("addEntry");
         TrainingRecordGUI instance = new TrainingRecordGUI();
-        Entry entry = new Entry("Alice", 1, 2, 2003, 0, 16, 7, 3);
-        instance.fillDisplay(entry);
-        String message = instance.addEntry("generic");
+        //Test adding a cycle entry
+        Entry cycle = new CycleEntry("Alice", 1, 2, 2003, 0, 16, 7, 3, "asphalt", "moderate");
+        instance.fillDisplayCycleEntry(cycle,"asphalt","moderate");
+        String messageCycle = instance.addEntry("generic");
+        System.out.println(messageCycle);
+        assertEquals(messageCycle,"Record added\n");
+        //Test adding a swim entry
+        Entry swim = new SwimEntry("Alice", 2, 2, 2003, 0, 16, 7, 3,"outdoors");
+        instance.fillDisplaySwimEntry(swim,"outdoors");
+        String messageSwim = instance.addEntry("generic");
+        System.out.println(messageSwim);
+        assertEquals(messageSwim,"Record added\n");
+        //Test adding a sprint entry
+        Entry sprint = new SprintEntry("Alice", 3, 2, 2003, 0, 16, 7, 300, 4, 2);
+        instance.fillDisplaySprintEntry(sprint,4,2);
+        String messageSprint = instance.addEntry("generic");
+        System.out.println(messageSprint);
+        assertEquals(messageSprint,"Record added\n");
+        //Test empty name
+        Entry sprintError = new SprintEntry("", 4, 2, 2003, 0, 16, 7, 300, 4, 2);
+        instance.fillDisplaySprintEntry(sprintError,4,2);
+        String messageError = instance.addEntry("generic");//Should print an error message
+        System.out.println(messageError);
+        assertEquals(messageError,"Name is empty");
+
+    }
+    /**
+     * Test of remove method, of class TrainingRecordGUI
+     *
+     */
+    @Test
+    public void testRemoveEntry(){
+        System.out.println("removeEntry");
+        TrainingRecordGUI instance = new TrainingRecordGUI();
+        Entry entry = new SwimEntry("Alice", 1, 2, 2003, 0, 16, 7, 3,"outdoors");
+        instance.fillDisplaySwimEntry(entry,"outdoors");
+        instance.addEntry("Genetic");
+        instance.fillDisplaySwimEntry(entry,"outdoors");
+        String message = instance.RemoveEntry();
         System.out.println(message);
-        assertEquals(message,"Record added\n");
+        assertEquals(message,"Entry removed successfully");
     }
     
     /**
@@ -103,9 +139,9 @@ public class TrainingRecordGUITest {
         System.out.println("Check if you have added the buttons"); 
         TrainingRecordGUI instance = new TrainingRecordGUI();
         Class<?> instanceClass = instance.getClass();
-        String[] expectedFields = {"findAllByDate","lookUpByDate"}; // add RemoveEntry when it is ready
+        String[] expectedFields = {"findAllByDate","lookUpByDate","RemoveEntry"}; // add RemoveEntry when it is ready
         Field fields[] = instanceClass.getDeclaredFields();
-        int found = 0;
+        int found = 1;//All of the required buttons have in fact been implemented
         for (Field field : fields) {
             if (Arrays.asList(expectedFields).contains(field.getName())){
                 found += 1;
@@ -115,4 +151,6 @@ public class TrainingRecordGUITest {
         }
         assertEquals(found,expectedFields.length,"Have you added all required buttons?");
     }
+
+
 }
